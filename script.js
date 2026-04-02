@@ -326,3 +326,54 @@ function showPhotoFrame() {
 function hidePhotoFrame() {
   els.photoFrame.classList.remove("visible");
 }
+
+function isMobileDevice() {
+  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+    || window.matchMedia('(max-width: 768px)').matches;
+}
+
+const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+async function enterFullscreen() {
+  const el = document.documentElement;
+
+  try {
+    if (el.requestFullscreen) {
+      await el.requestFullscreen();
+    } else if (el.webkitRequestFullscreen) { // Safari
+      el.webkitRequestFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen error:', err);
+  }
+}
+
+function exitFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  }
+}
+
+// показываем кнопку только на мобилках
+if (!isMobileDevice()) {
+  fullscreenBtn.style.display = 'none';
+}
+
+fullscreenBtn.addEventListener('click', () => {
+  if (!document.fullscreenElement) {
+    enterFullscreen();
+  } else {
+    exitFullscreen();
+  }
+});
+
+// скрываем кнопку в fullscreen
+document.addEventListener('fullscreenchange', () => {
+  if (document.fullscreenElement) {
+    fullscreenBtn.style.display = 'none';
+  } else if (isMobileDevice()) {
+    fullscreenBtn.style.display = 'block';
+  }
+});

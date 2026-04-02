@@ -417,3 +417,27 @@ button:hover {
     right: 4%;
   }
 }
+
+.fullscreen-btn {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+
+  padding: 8px 12px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+
+  cursor: pointer;
+}
+
+/* скрываем на десктопе */
+@media (min-width: 769px) {
+  .fullscreen-btn {
+    display: none;
+  }
+}
